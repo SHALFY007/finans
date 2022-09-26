@@ -25,6 +25,11 @@ export default {
             categories: ['id', 'Date', 'Category', 'Value']
         }
     },
+    computed: {
+        costs() {
+            return this.$store.getters.getCostes
+        }
+    },
     props: {
         costs: Array
     }

@@ -10,7 +10,7 @@
     </div>
     <AddForm @sendData="setData" v-show="formOpen"></AddForm>
     <List :costs="costs"></List>
-
+    <Paggins @countValues="setCountValue" :count="counts" @click="changeData"></Paggins>
   </div>
 </template>
 
@@ -18,21 +18,28 @@
 
 import List from './components/List.vue'
 import AddForm from './components/AddForm.vue'
+import Paggins from './components/Paggins.vue'
 
 export default {
   name: 'App',
   data() {
     return {
       costs: [],
+      counts: [1, 2],
       formOpen: false,
       description: '',
+      count: 1,
       amount: '',
       date: ''
     }
   },
   components: {
     List,
-    AddForm
+    AddForm,
+    Paggins
+  },
+  computed: {
+
   },
   methods: {
     getCosts() {
@@ -43,8 +50,19 @@ export default {
       ]
 
     },
+    changeData() {
+      this.$store.dispatch('fetchData', {
+        count: this.count
+      })
+    },
     openForm() {
       this.formOpen = !this.formOpen
+    },
+    setCountValue({ count }) {
+      this.count = count
+      this.$store.dispatch('fetchData', {
+        count: count
+      })
     },
     setData({ description, amount, date }) {
       this.description = description
@@ -55,8 +73,22 @@ export default {
 
   },
   mounted() {
-    this.costs = this.getCosts()
+    this.$store.dispatch('fetchData', {
+      count: this.count
+    })
+
+    //this.$store.dispatch('loadCosts')
+    //this.costs = this.getCosts()
   },
+  /*update() {
+    this.$nextTick(function () {
+      // Код, который будет запущен только после
+      // переотрисовки всех представлений
+      this.$store.dispatch('fetchData', {
+        count: this.count
+      })
+    })*/
+
 }
 </script>
 
