@@ -23,8 +23,17 @@ export default new Vuex.Store({
     },
     setCount: (state, payload) => {
       state.count = payload
-    }
+    },
+    /*setNewCostes: (state, payload) => {
+      state.costs.push(payload)
+      console.log({description,amount, date})
+    }**/
+    setNewCostes: (state, payload) => {
+      state.costs.push(payload)
+      console.log(payload)
+      //console.log({ description, amount, date })
 
+    },
   },
   actions: {
     loadCosts: ({ commit }) => {
@@ -68,11 +77,21 @@ export default new Vuex.Store({
         })
         .catch(e => console.log(e))
 
+    },
+    addNewCost: ({ commit }, values) => {
+      let obj = new Object();
+      obj.id = 1
+      obj.description = values.description
+      obj.amount = values.amount
+      obj.date = values.date
+      commit('setNewCostes', obj)
     }
+
   },
   modules: {
   },
-})
+}
+)
 /*{
 "page1": [
 { "id": 1, "date": "20.03.2020", "category": "Food", "value": 169 },

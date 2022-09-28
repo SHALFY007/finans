@@ -65,10 +65,16 @@ export default {
       })
     },
     setData({ description, amount, date }) {
-      this.description = description
+      /*this.description = description
       this.amount = amount
       this.date = date
-      console.log(this.amount)
+      console.log(this.amount)*/
+      this.$store.dispatch('addNewCost', {
+        description: description,
+        amount: amount,
+        date: date
+      })
+
     },
 
   },
@@ -80,6 +86,13 @@ export default {
     //this.$store.dispatch('loadCosts')
     //this.costs = this.getCosts()
   },
+  update() {
+    this.$store.dispatch('addNewCost', {
+      description: this.description,
+      amount: this.amount,
+      date: this.date
+    })
+  }
   /*update() {
     this.$nextTick(function () {
       // Код, который будет запущен только после
