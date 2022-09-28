@@ -8,8 +8,11 @@
         </span>
       </button>
     </div>
+    <router-link to="/add/payment/:category" :formOpen="formOpen"></router-link>
+    <router-view />
     <AddForm @sendData="setData" v-show="formOpen"></AddForm>
     <List :costs="costs"></List>
+
     <Paggins @countValues="setCountValue" :count="counts" @click="changeData"></Paggins>
   </div>
 </template>
@@ -59,6 +62,8 @@ export default {
       this.formOpen = !this.formOpen
     },
     setCountValue({ count }) {
+      event.preventDefault()
+      this.$router.push('/add/payment/:category')
       this.count = count
       this.$store.dispatch('fetchData', {
         count: count

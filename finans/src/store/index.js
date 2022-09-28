@@ -81,9 +81,10 @@ export default new Vuex.Store({
     addNewCost: ({ commit }, values) => {
       let obj = new Object();
       obj.id = 1
-      obj.description = values.description
-      obj.amount = values.amount
+      obj.category = values.description
       obj.date = values.date
+      obj.value = values.amount
+
       commit('setNewCostes', obj)
     }
 

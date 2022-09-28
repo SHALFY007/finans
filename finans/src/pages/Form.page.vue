@@ -1,49 +1,54 @@
 <template>
-    <div class="form">
+    <!--<div class="form">
         <form action="#">
             <input type="text" class="form-input" placeholder="Payment description" v-model="description">
             <input type="text" class="form-input" placeholder="Payment amount" v-model="amount">
             <input type="text" class="form-input" placeholder="Payment date" v-model="date">
             <br>
             <button class="form-button" @click="sendData">ADD +</button>
-            <button class="form-button" @click="close">Close</button>
         </form>
-
-
-
-    </div>
+    </div>-->
+    <Form @sendData="setData" @close="setClose" v-show="formOpen"></Form>
 </template>
 
 <script>
+import Form from '../components/AddForm.vue'
 export default {
-    name: 'AddForm',
+    name: 'FromPage',
     data() {
         return {
             description: '',
             amount: '',
             date: '',
-            formOpen: false
+            formOpen: true,
+
         }
+    },
+    components: {
+        Form
     },
     methods: {
-        sendData() {
-            event.preventDefault()
-            console.log('ads')
-            this.$emit('sendData', {
+        setData({ description, amount, date }) {
+            /*this.description = description
+            this.amount = amount
+            this.date = date
+            console.log(this.amount)*/
+            this.$store.dispatch('addNewCost', {
+                description: description,
+                amount: amount,
+                date: date
+            })
 
-                description: this.description,
-                amount: this.amount,
-                date: this.date
-            });
         },
-        close() {
-            event.preventDefault()
-            this.$emit('close', {
-                formOpen: this.formOpen
-            });
+        setClose({ formOpen }) {
+            this.formOpen = formOpen
         }
     },
+    computed: {
+
+    },
     mounted() {
+        console.log(this.formOpen)
         this.description = this.$route.params.category
         this.amount = this.$route.query.value
         this.date = `${new Date().getDate()}.${new Date().getMonth()}.${new Date().getFullYear()}`
