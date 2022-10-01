@@ -11,6 +11,12 @@
                     <h3 class="categories-title">{{item.date}}</h3>
                     <h3 class="categories-title">{{item.category}}</h3>
                     <h3 class="categories-title">{{item.value}}</h3>
+                    <button :id="`button-${item.id}`" @click="$modal.show(`${item.id}`)" class=" categories-button">
+                        &#65049;</button>
+                    <transition name="fade">
+                        <ModalWindow :name="item.id" :id="item.id" class="modal-w" />
+                    </transition>
+
                 </div>
             </div>
         </div>
@@ -18,22 +24,37 @@
 </template>
 
 <script>
+import ModalWindow from './ModalWindow.vue';
 export default {
-    name: 'List',
+    name: "List",
     data() {
         return {
-            categories: ['id', 'Date', 'Category', 'Value']
-        }
+            isOpen: false,
+            categories: ["id", "Date", "Category", "Value"]
+        };
     },
     computed: {
         costs() {
-            return this.$store.getters.getViewCoasts
+            return this.$store.getters.getViewCoasts;
         }
     },
     props: {
         costs: Array
-    }
-
+    },
+    methods: {
+        /*openWindow() {
+            let a = event.target.getAttribute('id')
+            let b = document.querySelector(`#modal-${a}`)
+            b.classList.toggle('open')
+        }*/
+        modalOpen() {
+            this.$modal.show()
+        },
+        modalClose() {
+            this.$modal.hide()
+        }
+    },
+    components: { ModalWindow }
 }
 </script>
 
@@ -62,6 +83,28 @@ export default {
 
 .categories-item {
     margin-top: 15px;
-    .categories-header()
+    .categories-header();
+    position: relative;
+}
+
+.categories-button {
+    margin-left: -390px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.modal-w {}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .5s;
+}
+
+.fade-enter,
+.fade-leave-to // .fade-leave-active до версии 2.1.8 
+
+    {
+    opacity: 0;
 }
 </style>

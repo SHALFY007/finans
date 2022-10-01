@@ -1,7 +1,6 @@
 <template>
     <section class="paggins-list">
         <button v-for="item in counts" class="paggins-button" :key="item" @click="countValues">{{item}}</button>
-        <p>{{counts}}</p>
     </section>
 </template>
 
