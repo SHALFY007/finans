@@ -35,6 +35,7 @@ export default {
                 amount: this.amount,
                 date: this.date
             });
+
         },
         close() {
             event.preventDefault()

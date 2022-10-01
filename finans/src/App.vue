@@ -13,7 +13,7 @@
     <AddForm @sendData="setData" v-show="formOpen"></AddForm>
     <List :costs="costs"></List>
 
-    <Paggins @countValues="setCountValue" :count="counts" @click="changeData"></Paggins>
+    <Paggins @countValues="setCountValue" @click="changeData"></Paggins>
   </div>
 </template>
 
@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       costs: [],
-      counts: [1, 2],
+      //counts: [1, 2],
       formOpen: false,
       description: '',
       count: 1,
@@ -42,7 +42,9 @@ export default {
     Paggins
   },
   computed: {
-
+    /*count() {
+      return this.$store.getters.getCostes.length / 3
+    }*/
   },
   methods: {
     getCosts() {
@@ -60,12 +62,16 @@ export default {
     },
     openForm() {
       this.formOpen = !this.formOpen
+      //this.$router.push('/add/payment/:category')
     },
     setCountValue({ count }) {
       event.preventDefault()
-      this.$router.push('/add/payment/:category')
-      this.count = count
+      //this.$router.push('/add/payment/:category')
+      /*this.count = count
       this.$store.dispatch('fetchData', {
+        count: count
+      })*/
+      this.$store.dispatch('AddViewCosts', {
         count: count
       })
     },
@@ -79,14 +85,20 @@ export default {
         amount: amount,
         date: date
       })
+      this.$store.dispatch('AddViewCosts', {
+        count: count
+      })
+
 
     },
 
   },
   mounted() {
+    //this.count = this.$store.getters.getCostes.length / 3
     this.$store.dispatch('fetchData', {
       count: this.count
     })
+
 
     //this.$store.dispatch('loadCosts')
     //this.costs = this.getCosts()

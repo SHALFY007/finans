@@ -27,7 +27,7 @@ export default {
     },
     computed: {
         costs() {
-            return this.$store.getters.getCostes
+            return this.$store.getters.getViewCoasts
         }
     },
     props: {

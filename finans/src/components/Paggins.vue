@@ -1,6 +1,7 @@
 <template>
     <section class="paggins-list">
-        <button v-for="item in count" class="paggins-button" :key="item" @click="countValues">{{item}}</button>
+        <button v-for="item in counts" class="paggins-button" :key="item" @click="countValues">{{item}}</button>
+        <p>{{counts}}</p>
     </section>
 </template>
 
@@ -12,22 +13,32 @@ export default {
             countValue: 1
         }
     },
-    props: {
-        count: Array
-    },
     methods: {
         countValues() {
-            console.log(event.target.textContent)
+            this.$emit('countValues', {
+                //count: this.counts
+                count: event.target.textContent
+            })
+            /*console.log(event.target.textContent)
             this.countValue = event.target.textContent
             this.$emit('countValues', {
                 count: event.target.textContent
             })
             console.log(this.countValue)
+            console.log(this.counts)*/
         },
         changeData() {
 
         }
     },
+    computed: {
+        counts() {
+            return Math.ceil(this.$store.getters.getCostes.length / 3)
+        }
+    },
+    mounted: {
+
+    }
 
 }
 </script>
