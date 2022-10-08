@@ -1,28 +1,38 @@
 <template>
-  <div id="app">
-    <div class="container">
-      <h1 class="header-text">My personal costs</h1>
-      <button class="header-button" @click="openForm">
-        <span class="header-button-txt">
-          ADD NEW COSTS +
-        </span>
-      </button>
-    </div>
-    <router-link to="/add/payment/:category" :formOpen="formOpen"></router-link>
-    <router-view />
-    <AddForm @sendData="setData" v-show="formOpen"></AddForm>
-    <List :costs="costs"></List>
+  <v-app>
+    <v-container>
 
-    <Paggins @countValues="setCountValue" @click="changeData"></Paggins>
-  </div>
+      <v-col>
+        <h1 class="header-text">My personal costs</h1>
+      </v-col>
+      <v-col>
+        <v-btn color="#26C6DA" @click="openForm"><span class="header-button-txt">
+            ADD NEW COSTS +
+          </span></v-btn>
+      </v-col>
+      <v-main>
+        <div id="app">
+          <router-link to="/add/payment/:category" :formOpen="formOpen"></router-link>
+          <router-view />
+          <AddForm @sendData="setData" @close="close" v-show="formOpen"></AddForm>
+          <List :costs="costs"></List>
+
+          <Paggins @countValues="setCountValue" @click="changeData"></Paggins>
+
+        </div>
+
+      </v-main>
+    </v-container>
+
+  </v-app>
+
 </template>
 
 <script>
-
 import List from './components/List.vue'
 import AddForm from './components/AddForm.vue'
 import Paggins from './components/Paggins.vue'
-
+import BarChart from './components/BarChart.vue'
 export default {
   name: 'App',
   data() {
@@ -33,13 +43,15 @@ export default {
       description: '',
       count: 1,
       amount: '',
-      date: ''
+      date: '',
+
     }
   },
   components: {
     List,
     AddForm,
-    Paggins
+    Paggins,
+    BarChart
   },
   computed: {
     /*count() {
@@ -53,7 +65,6 @@ export default {
         { id: 2, date: '22.09.2022', category: 'transport', value: 82 },
         { id: 3, date: '22.09.2022', category: 'health', value: 582 },
       ]
-
     },
     changeData() {
       this.$store.dispatch('fetchData', {
@@ -63,6 +74,9 @@ export default {
     openForm() {
       this.formOpen = !this.formOpen
       //this.$router.push('/add/payment/:category')
+    },
+    close() {
+      this.formOpen = false
     },
     setCountValue({ count }) {
       event.preventDefault()
@@ -88,18 +102,13 @@ export default {
       this.$store.dispatch('AddViewCosts', {
         count: count
       })
-
-
     },
-
   },
   mounted() {
     //this.count = this.$store.getters.getCostes.length / 3
     this.$store.dispatch('fetchData', {
       count: this.count
     })
-
-
     //this.$store.dispatch('loadCosts')
     //this.costs = this.getCosts()
   },
@@ -118,7 +127,6 @@ export default {
         count: this.count
       })
     })*/
-
 }
 </script>
 
@@ -159,7 +167,7 @@ export default {
 
 .header-button {
   width: 150px;
-  height: 36px;
+  /*height: 36px;*/
   margin: 0 auto;
   background-color: darkturquoise;
   border-radius: 8px;
@@ -182,8 +190,6 @@ export default {
       transition-duration: .5s;
     }
   }
-
-
 }
 
 /*.header-button-txt {

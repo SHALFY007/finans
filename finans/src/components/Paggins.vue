@@ -1,7 +1,10 @@
 <template>
-    <section class="paggins-list">
-        <button v-for="item in counts" class="paggins-button" :key="item" @click="countValues">{{item}}</button>
-    </section>
+    <v-paggination>
+        <v-btn v-for="item in counts" :key="item" @click="countValues" color="#26C6DA">
+            {{item}}
+        </v-btn>
+    </v-paggination>
+
 </template>
 
 <script>

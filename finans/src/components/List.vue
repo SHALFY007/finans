@@ -1,26 +1,26 @@
 <template>
-    <div class="list">
-        <div class="container">
-            <div class="categories">
-                <div class="categories-header">
-                    <h3 v-for="item in categories" class="categories-title">{{item}}</h3>
-                </div>
-                <hr>
-                <div v-for="item in costs" class="categories-item">
-                    <h3 class="categories-title">{{item.id}}</h3>
-                    <h3 class="categories-title">{{item.date}}</h3>
-                    <h3 class="categories-title">{{item.category}}</h3>
-                    <h3 class="categories-title">{{item.value}}</h3>
-                    <button :id="`button-${item.id}`" @click="$modal.show(`${item.id}`)" class=" categories-button">
-                        &#65049;</button>
+    <v-container>
+        <v-row>
+            <v-col v-for="item in categories" class="categories-title">{{item}}</v-col>
+            <v-col v-for="item in costs">
+                <v-card style="display:flex; justify-content: space-between; width: 1440px;">
+                    <v-card-title>{{item.id}}</v-card-title>
+                    <v-card-title>{{item.date}}</v-card-title>
+                    <v-card-title>{{item.category}}</v-card-title>
+                    <v-card-title>{{item.value}}</v-card-title>
+                    <v-card-actions :id="`button-${item.id}`" @click="$modal.show(`${item.id}`)">
+                        <v-btn>&#65049;</v-btn>
+                    </v-card-actions>
                     <transition name="fade">
                         <ModalWindow :name="item.id" :id="item.id" class="modal-w" />
                     </transition>
+                </v-card>
+            </v-col>
+        </v-row>
 
-                </div>
-            </div>
-        </div>
-    </div>
+    </v-container>
+
+
 </template>
 
 <script>
@@ -30,7 +30,7 @@ export default {
     data() {
         return {
             isOpen: false,
-            categories: ["id", "Date", "Category", "Value"]
+            categories: ["id", "Date", "Category", "Value", "Edit"]
         };
     },
     computed: {
@@ -85,6 +85,10 @@ export default {
     margin-top: 15px;
     .categories-header();
     position: relative;
+}
+
+#no-background-hover::before {
+    background-color: transparent !important;
 }
 
 .categories-button {
