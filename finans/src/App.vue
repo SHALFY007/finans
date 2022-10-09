@@ -20,7 +20,7 @@
           <Paggins @countValues="setCountValue" @click="changeData"></Paggins>
 
         </div>
-
+        <BarChart :category="category"></BarChart>
       </v-main>
     </v-container>
 
@@ -37,14 +37,14 @@ export default {
   name: 'App',
   data() {
     return {
-      costs: [],
       //counts: [1, 2],
       formOpen: false,
       description: '',
       count: 1,
       amount: '',
       date: '',
-
+      category: [],
+      countOfCategory: 0
     }
   },
   components: {
@@ -54,6 +54,12 @@ export default {
     BarChart
   },
   computed: {
+    costs() {
+      let a = this.$store.getters.getCostes;
+      for (let i of a) {
+        this.category.push(i.category)
+      }
+    }
     /*count() {
       return this.$store.getters.getCostes.length / 3
     }*/
@@ -105,12 +111,11 @@ export default {
     },
   },
   mounted() {
-    //this.count = this.$store.getters.getCostes.length / 3
     this.$store.dispatch('fetchData', {
       count: this.count
     })
-    //this.$store.dispatch('loadCosts')
-    //this.costs = this.getCosts()
+
+
   },
   update() {
     this.$store.dispatch('addNewCost', {
